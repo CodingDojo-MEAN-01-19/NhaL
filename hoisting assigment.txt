@@ -1,0 +1,216 @@
+1.
+console.log(hello);                                   
+var hello = 'world'; 
+------------------------------------
+rewrite: 
+
+var hello;
+console.log(hello); 
+hello='world';
+
+-predition: var hello is hoisted to the top, assignment only happens after it's console-logged.
+ =>return undefine
+*correct
+
+2.
+var needle = 'haystack';
+test();
+function test(){
+	var needle = 'magnet';
+	console.log(needle);
+}
+---------------------------------------------
+rewrite as: 
+
+var needle; 
+needle = 'haystack';
+function test(){
+	var needle;
+	needle = 'magnet';
+	console.log(needle);
+}
+
+-prediction: global needle was declared and assigned by never called. 
+calling test() would execute the function and logged the local needle within the function 
+and log 'magnet'
+*correct
+
+3. 
+var brendan = 'super cool';
+function print(){
+	brendan = 'only okay';
+	console.log(brendan);
+}
+console.log(brendan);
+---------------------------------------
+var brendan; 
+brendan = ' super cool';
+function print(){
+	var brendan; 
+	brendan = 'only okay';
+	console.log(brendan);
+}
+console.log(); 
+
+- prediction: global variable brendan was properly declared and assigned. 
+the local variable was properly declared and assigned but the function was never invoked. 
+=>console.log displays 'super cool'. 
+*correct
+
+4. 
+var food = 'chicken';
+console.log(food);
+eat();
+function eat(){
+	food = 'half-chicken';
+	console.log(food);
+	var food = 'gone';
+}
+-----------------------------------------
+rewrite as: 
+var food; 
+food = 'chicken';
+console.log(food); 
+function eat(){
+	var food; 
+	food = 'half-chicken'; 
+	console.log(food); 
+	food='gone';
+}
+eat(); 
+
+-prediction: variable food was properly declared and assigned. 
+	=>console.log displays 'chicken'. 
+-within the function var food is hoisted to the top; following by assignment of 'half-chicken'. 
+	=>call eat() console.log displays 'half-chicken'
+*correct
+
+5.
+mean();	
+console.log(food);
+var mean = function() {
+	food = "chicken";
+	console.log(food);
+	var food = "fish";
+	console.log(food);
+}
+console.log(food);
+----------------------------------------
+rewrite as: 
+var mean; 
+mean(); 
+
+-prediction: global variable mean is hoisted to the top while it has not been assigned.
+	=>mean() return undefined
+-variable food was never been declared globally. 
+	=>error: food is not defined
+* incorrect: return error mean is not a function. not undefined. it never have a chance to reach console.log(food)
+
+6. 
+console.log(genre);
+var genre = "disco";
+rewind();
+function rewind() {
+	genre = "rock";
+	console.log(genre);
+	var genre = "r&b";
+	console.log(genre);
+}
+console.log(genre);
+------------------------------
+rewrite as: 
+var genre; 
+console.log(genre); 
+genre='disco'; 
+function rewind(){
+	var genre; 	
+	genre = 'rock'; 
+	console.log(genre); 
+	genre = " r&b"; 
+	console.log(genre); 
+}
+console.log(genre); 
+
+-prediction: var genre is hoisted to the top but assignment stays below console.log(genre)
+	=> console.log shows undefined
+-within the function rewind() scope var genre is hoisted to the top then value "rock" is assigned. 
+	=>console.log shows "rock"
+-then value "r&b" is assigned and replaces "rock"
+	=>console.log shows "r&b"
+-finally console.log the global genre 
+	=>console.log "disco"
+* correct
+
+7. 
+dojo = "san jose";
+console.log(dojo);
+learn();
+function learn() {
+	dojo = "seattle";
+	console.log(dojo);
+	var dojo = "burbank";
+	console.log(dojo);
+}
+console.log(dojo);
+------------------------------
+var dojo; 
+dojo = 'san jose';
+console.log(dojo);
+function(){
+	var dojo; 
+	dojo = "seattle"; 
+	console.log(dojo); 
+	dojo = 'burbank'; 
+	console.log(dojo); 
+}
+lear(); 
+console.log(dojo); 
+
+-prediction: dojo is undeclared variable so it's treated as global variable.  
+	=> console.log() show 'san jose'
+-within the function learn(), var dojo is hoisted to the top then assigned 'seattle' to it. 
+	=>console.log(dojo) shows 'seattle'
+-then again within the function, 'burbank' is reassigned to dojo. 
+	=> console.log(dojo) shows 'burbank. 
+-globally again, console.log(dojo) show 'san jose'
+* correct
+
+8. 
+console.log(makeDojo("Chicago", 65));
+console.log(makeDojo("Berkeley", 0));
+function makeDojo(name, students){
+        const dojo = {};
+        dojo.name = name;
+        dojo.students = students;
+        if(dojo.students > 50){
+            dojo.hiring = true;
+        }
+        else if(dojo.students <= 0){
+            dojo = "closed for now";
+        }
+        return dojo;
+}
+
+-prediction: dojo is an object with assigned values from function input in according with the if statement. 
+	=> console.log(makeDojo('Chicago', 65) print {name:"Chicago", students:65, hiring:true}
+	=> console.log(makeDojo('Berkley', 0) print 'closed for now' 
+* half correct: first one print an object. the second one display an error. it looks like we can't reassign a string to dojo since we set it to be an object. 
+I replaced const with var and it display the string just fine. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Loops</h2>
+
+<p>The for/in statement loops through the properties of an object.</p>
+
+<p id="demo"></p>
+
+<script>
+var txt = "";
+let users = {
+    employees: [
+        {'first_name':  'Miguel', 'last_name' : 'Jones'},
+        {'first_name' : 'Ernie', 'last_name' : 'Bertson'},
+        {'first_name' : 'Nora', 'last_name' : 'Lu'},
+        {'first_name' : 'Sally', 'last_name' : 'Barkyoumb'}
+    ],
+    managers: [
+       {'first_name' : 'Lillian', 'last_name' : 'Chambers'},
+       {'first_name' : 'Gordon', 'last_name' : 'Poe'}
+    ]
+ }; 
+ 
+for (key in users) {
+	txt += "<ul><li>" +key+":</li></ul>"; 
+	arr=users[key];
+    for (i=0; i<users[key].length; i++){
+		obj=arr[i];
+		o=i+1
+		txt += "<br/>"+o+"."+obj.last_name+", "+obj.first_name;
+    }
+	
+}
+document.getElementById("demo").innerHTML = txt;
+</script>
+
+</body>
+</html>
