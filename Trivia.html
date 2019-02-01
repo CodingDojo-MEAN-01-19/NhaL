@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h2>Trivia</h2>
+
+    <button type="button" onclick="get_trivia()">Next Question</button>
+
+    <p id="demo"></p>
+    <p id ='demo1'></p>
+
+    <script>
+    function get_trivia(){
+        $.get("https://opentdb.com/api.php?amount=10&category=22&difficulty=medium&type=multiple", displayInfo)
+    // Notice that displayName is a function that takes in 1 parameter (this is the data that comes back from the API)
+        function displayInfo(data) {
+        console.log(data.results);
+        for (result in data.results){
+            
+            for (i=0; i<data.results.length; i++){
+                var list=""
+                list+="<input type='radio' class='correct'>"+data.results[i].correct_answer+"<br>"
+                for (j=0;j<data.results[i].incorrect_answers.length; j++){
+                    //list=data.results[i].incorrect_answers[j];
+                    list+="<input type='radio' class='incorrect'>"+data.results[i].incorrect_answers[j]+"<br>";
+                }
+                document.getElementById("demo").innerHTML = "<ul><li>"+ data.results[i].question+"</li></ul><form>"+list+"</form>";
+            }
+        }
+            
+            
+        //document.getElementById("demo").innerHTML = "login: "+data.login;
+        //document.getElementById("demo1").innerHTML = data; 
+    }
+    }
+
+
+    </script>
+
+</body>
+</html>

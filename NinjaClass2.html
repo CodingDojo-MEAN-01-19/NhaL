@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>Javascript Demo</title>
+
+</head>
+<body>
+    
+
+    
+<script>
+function Ninja(name) {
+    // create a private variable that stores a reference to the new object we create
+
+    this.name = name;
+    this.health = 100
+    var speed = 3;
+    var strength = 3; 
+    
+    Ninja.prototype.sayName = function() {
+        console.log("Hello my name is " + this.name);
+        return this;
+    }
+    this.showStats = function(){
+        console.log("Name: "+this.name+"; Speed: "+speed+"; Strength"+strength+"; Health:"+this.health)
+        return this; 
+    }
+    Ninja.prototype.drinkSake = function() {
+        this.health+=10;
+        console.log("Health: " + this.health);
+        return this;
+    }
+    Ninja.prototype.punch = function(ninja) {
+        ninja.health-=5;
+        console.log("Health: " + ninja.health);
+        return this;
+    }
+    Ninja.prototype.kick = function(ninja) {
+        ninja.health-=15;
+        console.log("Health: " + ninja.health);
+        return this;
+    }
+}
+var ninja1 =new Ninja("Osakasuba");
+var redNinja =new Ninja("Nha");
+var blueNinja =new Ninja("Bill");
+redNinja.sayName();
+blueNinja.sayName();
+redNinja.punch(blueNinja);
+redNinja.kick(blueNinja);
+blueNinja.showStats();
+
+</script>
+
+</body>
+</html>
