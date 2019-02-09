@@ -1,0 +1,30 @@
+1. create my_first_db database
+	use my_first_db
+
+2. create students collection
+	db.createCollection('students')
+
+3. documents format:
+	({name: STRING, home_state: STRING, lucky_number: NUMBER, birthday: {month: NUMBER, day: NUMBER, year: NUMBER}})
+
+4. insert documents: 
+	db.students.insert({name: "Landon", home_state: "WA, lucky_number: 7, birthday: {month: 7, day: 12, year: 1999}})
+
+5. get all students: 
+	db.students.find().pretty()
+
+6. get students from CA and WA.
+	db.students.find({home_state: {$in: ['WA', 'CA']}})
+
+7. find students with lucky_number: 
+	a. greater than 3
+		db.students.find({lucky_number: {$gt: 3}})
+	b. less than or equal to 10
+		db.students.find({lucky_number: {$lte: 10}})
+	c. from 1 to 9: 
+		db.students.find({$or: [{lucky_number:{$gte:1}}, {lucky_number: {$lte:9}}]})
+
+8. add interests: 
+	db.students.update({},{$set: {interest: ['coding', 'brunch', 'MongoDB']}})
+
+9.
