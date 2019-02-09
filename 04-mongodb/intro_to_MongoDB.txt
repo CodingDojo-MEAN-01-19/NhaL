@@ -25,6 +25,37 @@
 		db.students.find({$or: [{lucky_number:{$gte:1}}, {lucky_number: {$lte:9}}]})
 
 8. add interests: 
-	db.students.update({},{$set: {interest: ['coding', 'brunch', 'MongoDB']}})
+	db.students.update({},{$set: {"interests":['coding', 'brunch', 'MongoDB']}},{multi:true})
 
-9.
+9. add to interest array: 
+	db.students.update({name: "Landon"},{$push: {interests:{$each:['soccer', 'piano']}}})
+
+10. add taxes
+	db.students.update({name: "John"},{$push: {interests: "taxes"}})
+11. remove taxes
+	db.students.update({name: "John"},{$pull: {interests: "taxes"}})
+
+12. remove CA students
+	db.students.remove({$or: [{home_state:"CA"}, {home_state:"WA"}]})
+
+13. remove student by name
+	db.students.remove({name:"Nha"})
+
+14. removed student with lucky_number greater than 5 -just one
+	db.students.remove({lucky_number: {$gt:5}}, {justOne:true})
+
+15. add belt count
+	db.students.update({},{$set: {"number_of_belts":0}},{multi:true})
+
+16. increase belt count to 1
+	db.students.update({home_state: "Washington"},{$inc: {number_of_belts: 1}},{multi:true})
+
+17. change name of number of belt to belts_earned
+	db.students.update({}, {$rename: {"number_of_belts":"belts_earned"}})
+
+18. Remove lucky_number:
+	db.students.update({}, {$unset:{lucky_number:""}},{multi:true})
+
+19. Add updated_on
+	db.students.update({}, {$currentDate:{updated_on:true}},{multi:true})
+	
