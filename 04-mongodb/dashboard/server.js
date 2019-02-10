@@ -16,30 +16,31 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Create connection to database
-const connection = mongoose.connect("mongodb://localhost/dog_db");
+const connection = mongoose.connect("mongodb://localhost/bird_db",{useNewUrlParser: true});
 
 // Create dog schema and attach it as a model to our database
-const DogSchema = new mongoose.Schema({
+const BirdSchema = new mongoose.Schema({
     name: String,
     weight: Number,
     color: String
 });
 
 // Mongoose automatically looks for the plural version of your model name, so a Dog model in Mongoose looks for 'dogs' in Mongo.
-const Dog = mongoose.model('Dog', DogSchema);
+const Bird = mongoose.model('Bird', BirdSchema);
 
 // Routes go here!
 app.get('/', function(req, res){
-  Dog.find({}, function(err, results){
+  Bird.find({}, function(err, results){
     if (err) { console.log(err); }
-    res.render('index', { dogs: results });
+    console.log(results);
+    res.render('index', { birds: results });
   });
 });
 
 // Create
 app.post('/', function(req, res){
   // Create a new dog!
-  Dog.create(req.body, function(err, result){
+  Bird.create(req.body, function(err, result){
     if (err) { console.log(err); }
     res.redirect('/')
   });
@@ -52,14 +53,14 @@ app.get('/new', function(req, res){
 
 // Show
 app.get('/:id', function(req, res){
-  Dog.find({ _id: req.params.id }, function(err, response) {
+  Bird.find({ _id: req.params.id }, function(err, response) {
     if (err) { console.log(err); }
     res.render('show', { dog: response[0] });
   });
 });
 
 app.get('/:id/edit/', function(req, res){
-  Dog.find({ _id: req.params.id }, function(err, response) {
+  Bird.find({ _id: req.params.id }, function(err, response) {
     if (err) { console.log(err); }
     res.render('edit', { dog: response[0] });
   })
@@ -67,7 +68,7 @@ app.get('/:id/edit/', function(req, res){
 
 // Update
 app.post('/:id', function(req, res){
-  Dog.update({ _id: req.params.id }, req.body, function(err, result){
+  Bird.update({ _id: req.params.id }, req.body, function(err, result){
     if (err) { console.log(err); }
     res.redirect('/');
   });

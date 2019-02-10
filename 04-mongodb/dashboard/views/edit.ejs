@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Edit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <h1>Edit #<%= dog.name %>!</h1>
-  <form action="/<%= dog.id %>" method='post'>
-    Name: <input type="text" name="name" value="<%= dog.name %>">
-    Weight: <input type="text" name="weight" value="<%= dog.weight %>">
-    Color: <input type="text" name="color" value="<%= dog.color %>">
-    <input type="submit" value="Edit dog!">
+  <h1>Edit <%= bird.name %>!</h1>
+  <form action="/<%= bird.id %>" method='post'>
+    Name: <input type="text" name="name" value="<%= bird.name %>">
+    Weight: <input type="text" name="weight" value="<%= bird.weight %>">
+    Color: <input type="text" name="color" value="<%= bird.color %>">
+    <input type="submit" value="Edit bird!">
   </form>
   <a href="/">Home</a>
 </body>
