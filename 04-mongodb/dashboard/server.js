@@ -25,7 +25,6 @@ const BirdSchema = new mongoose.Schema({
     color: String
 });
 
-// Mongoose automatically looks for the plural version of your model name, so a Dog model in Mongoose looks for 'dogs' in Mongo.
 const Bird = mongoose.model('Bird', BirdSchema);
 
 // Routes go here!

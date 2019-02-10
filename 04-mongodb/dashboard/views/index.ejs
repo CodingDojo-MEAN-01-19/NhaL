@@ -11,9 +11,10 @@
 <body>
   <h1 class='jumbotron'>Index Page!</h1>
   <a href="/new">Create new bird</a>
+  <p><% birds %></p>
   <!-- loop through birds and display -->
   <% for (const bird in birds) { %>
-    <p><% bird.name %></p>
+    
     <p>Name: <a href="/<%= bird._id %>"><%= bird.name %></a>
       <a href="/<%= bird._id %>/edit/"><button>Edit bird</button></a>
       <form action="/<%= bird._id %>/delete/" method='post'>
