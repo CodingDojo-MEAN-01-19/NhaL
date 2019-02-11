@@ -11,13 +11,12 @@
 <body>
   <h1 class='jumbotron'>Index Page!</h1>
   <a href="/new">Create new bird</a>
-  <p><% birds %></p>
+<!--   <p><%= birds[0].name %></p> -->
   <!-- loop through birds and display -->
-  <% for (const bird in birds) { %>
-    
-    <p>Name: <a href="/<%= bird._id %>"><%= bird.name %></a>
-      <a href="/<%= bird._id %>/edit/"><button>Edit bird</button></a>
-      <form action="/<%= bird._id %>/delete/" method='post'>
+  <% for (let i = 0; i<birds.length; i++) { %>
+    <p>Name: <a href="/<%= birds[i]._id %>"><%= birds[i].name %></a>
+      <a href="/<%= birds[i]._id %>/edit/"><button>Edit bird</button></a>
+      <form action="/<%= birds[i]._id %>/delete/" method='post'>
         <input type="submit" value="Delete">
       </form>
     </p> 

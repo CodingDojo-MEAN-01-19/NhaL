@@ -1,9 +1,9 @@
 // Dependencies
-const express = require('express'),
-    bodyParser = require('body-parser'),
-    mongoose = require('mongoose'),
-    path = require('path'),
-    port = 8000;
+const express = require('express');
+const  bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const  path = require('path');
+const  port = 8000;
 
 // Create express app
 const app = express();
@@ -31,7 +31,6 @@ const Bird = mongoose.model('Bird', BirdSchema);
 app.get('/', function(req, res){
   Bird.find({}, function(err, results){
     if (err) { console.log(err); }
-    console.log(results);
     res.render('index', { birds: results });
   });
 });
@@ -54,14 +53,14 @@ app.get('/new', function(req, res){
 app.get('/:id', function(req, res){
   Bird.find({ _id: req.params.id }, function(err, response) {
     if (err) { console.log(err); }
-    res.render('show', { dog: response[0] });
+    res.render('show', { bird: response });
   });
 });
 
 app.get('/:id/edit/', function(req, res){
   Bird.find({ _id: req.params.id }, function(err, response) {
     if (err) { console.log(err); }
-    res.render('edit', { dog: response[0] });
+    res.render('edit', { bird: response });
   })
 });
 
@@ -75,7 +74,7 @@ app.post('/:id', function(req, res){
 
 // Delete
 app.post('/:id/delete', function(req, res){
-  Dog.remove({ _id: req.params.id }, function(err, result){
+  Bird.remove({ _id: req.params.id }, function(err, result){
     if (err) { console.log(err); }
     res.redirect('/');
   });

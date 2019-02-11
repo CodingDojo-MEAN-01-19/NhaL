@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set("views", path.join(__dirname, "./views"));
 app.set("view engine", "ejs");
+
 app.get("/", function(req, res) {
 	Message.find({}, false, true).populate('_comments').exec(function(err, messages) {
 	      res.render('index.ejs', { messages: messages });
@@ -48,7 +49,7 @@ app.listen(8000, function() {
 	console.log("server running on port 8000");
 });
 
-mongoose.connect('mongodb://127.0.0.1/message_board', {useNewUrlParser: true},function(err, db) {
+mongoose.connect('mongodb://127.0.0.1/message_board',function(err, db) {
 	if (err) {
 		console.log("error here");
 		console.log(err);
