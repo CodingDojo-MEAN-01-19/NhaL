@@ -3,28 +3,83 @@ const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require("body-parser");
+const  port = 8000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "./views"));
 app.set("view engine", "ejs");
 
-app.get("/", function(req, res) {
-	Message.find({}, false, true).populate('_comments').exec(function(err, messages) {
-	      res.render('index.ejs', { messages: messages });
-	});
+mongoose.connect("mongodb://localhost/message_board",{useNewUrlParser: true}, function(err, db) {
+	if (err) {
+		console.log("error here:", err);
+	}
 });
+
+const Schema = mongoose.Schema;
+
+const MessageSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'name is required'],
+        trim: true, 
+        minlength: [3, 'must be 3 or more characters'],
+    }, 
+    message: {
+        type: String,
+        required: [true, 'legs is required'],
+        minlength: [3, 'must be 3 or more characters'],
+    },
+    _comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
+});
+
+mongoose.model("Message", MessageSchema);
+
+const Message = mongoose.model("Message");
+const CommentSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: [true, 'cannot be blank'],
+	},
+	text: {
+		type: String, 
+		required: [true, 'cannot be blank'],
+	},
+	_message: {type: Schema.Types.ObjectId, ref: 'Message'}
+});
+
+mongoose.model("Comment", CommentSchema);
+
+const Comment = mongoose.model("Comment");
+
+//routes go below
+
+/* app.get("/", function(req, res) {
+	Message.find({}, false, true).populate('_comments').exec(function(err, messages) {
+	      res.render('index', { messages: messages });
+	});
+}); */
+
+app.get('/', function(req, res){
+	Message.find({}, function(err, messages){
+	  if (err) { console.log(err); }
+	  res.render('index', { messages: messages });
+	});
+  });
+
 app.post("/message", function(req, res){
 	var newMessage = new Message({ name: req.body.name, message: req.body.message });
 	newMessage.save(function(err) {
 		if (err) {
 			console.log(err);
-			res.render('index.ejs', { errors: newMessage.errors });
+			res.render('index', { errors: newMessage.errors });
 		} else {
 			console.log("success");
 			res.redirect('/');
 		}
 	})
 })
+
+
 app.post("/comment/:id", function(req, res) {
 	const messageId = req.params.id;
 	Message.findOne({ _id: messageId }, function(err, message) {
@@ -36,7 +91,7 @@ app.post("/comment/:id", function(req, res) {
 		newComment.save(function(err) {
 			if (err) {
 				console.log(err);
-				res.render('index.ejs', { errors: newComment.errors });
+				res.render('index', { errors: newComment.errors });
 			} else {
 				console.log("comment added");
 				res.redirect("/");
@@ -45,37 +100,10 @@ app.post("/comment/:id", function(req, res) {
 	});
 });
 
-app.listen(8000, function() {
-	console.log("server running on port 8000");
+
+
+app.listen(port, function(){
+	console.log("Running on ", port);
 });
 
-mongoose.connect('mongodb://127.0.0.1/message_board',function(err, db) {
-	if (err) {
-		console.log("error here");
-		console.log(err);
-	}
-});
 
-const Schema = mongoose.Schema;
-const MessageSchema = new mongoose.Schema({
-	name: String,
-	message: String,
-	_comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}]
-});
-
-MessageSchema.path('name').required(true, 'Name cannot be blank');
-MessageSchema.path('message').required(true, 'Message cannot be blank');
-mongoose.model("Message", MessageSchema);
-
-const Message = mongoose.model("Message");
-const CommentSchema = new mongoose.Schema({
-	name: String,
-	text: String,
-	_message: {type: Schema.Types.ObjectId, ref: 'Message'}
-});
-
-CommentSchema.path('name').required(true, 'Name cannot be blank');
-CommentSchema.path('text').required(true, 'Comment cannot be blank');
-mongoose.model("Comment", CommentSchema);
-
-const Comment = mongoose.model("Comment");
