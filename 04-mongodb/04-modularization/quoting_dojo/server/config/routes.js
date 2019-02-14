@@ -1,29 +1,29 @@
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
+var Quote = mongoose.model('NewQuote');
 
-const Quote = mongoose.model('quotes');
+module.exports = {
+    
+    index: function(req, res) {
+        res.render('index');
+    },
 
-module.exports = function(app){
+    create: function(req, res) {
+        console.log("POST DATA", req.body);
+        var curquote = new Quote({name: req.body.name, quote: req.body.quote})
+        curquote.save( function(err) {
+        if(err) {
+            console.log('something went wrong');
+        } else {
+            console.log('successfully added a quote!')
+        }
+        res.redirect('/quotes');
+        });
+    },
 
-// Here are our routes!
-app.get('/', function(req, res) {
-    res.render('welcome');
-  });
-  
-  app.get('/quotes', function(req, res) {
-    // Logic to grab all quotes and pass into the rendered view
-    Quote.find({}, function(err, quotes) {
-      if (err) { console.log(err); }
-      res.render('quotes', { quotes: quotes });
-    });
-  });
-  
-  app.post('/quotes', function(req, res) {
-    Quote.create(req.body, function(err) {
-      if (err) { console.log(err); }
-      res.redirect('/quotes');
-    });
-  });
-  // END OF ROUTING...
-
-
-} 
+    display: function(req, res) {
+        Quote.find({}, function(err, quotes) {
+            if (err) { console.log(err) }
+            res.render('quotes', {users: quotes})
+        });
+    }
+}

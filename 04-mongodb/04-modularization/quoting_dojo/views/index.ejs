@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quoting Dojo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css'>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var socket = io();
+            socket.on('increase_one', function(data) {
+                $('#result').empty();
+                $('#result').append("<p>This button has been pushed " + data.number + " times!</p>");
+            });
+            socket.on('reset_to', function(data) {
+                $('#result').empty();
+                $('#result').append("<p>This button has been pushed " + data.number + " times!</p>");
+            })
+            $('#submit').click(function() {
+                socket.emit('button_push');
+            }); 
+            $('#reset').click(function() {
+                socket.emit('reset_push');
+            });
+        });
+    </script> -->
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Quoting Dojo</h1>
+        <form action="/process" id='quote_form' method="post">
+                Name: <br>
+                <input type='text' name="name" id="name"><br>
+                <br>
+                Quote: 
+                <br>
+                <textarea name='quote' id="quote"></textarea><br>
+                <input type='submit' value='Add my quote!' id="submit">
+            </form>
+    </div>
+</body>
+</html>

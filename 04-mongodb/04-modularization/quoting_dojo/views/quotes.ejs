@@ -1,21 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Quotes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Quotes List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css'>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-  <a href="/">Home</a>
-  <h1 class="jumbotron">Check out all the awesome quotes!</h1>
-  <div class="well well-lg">
-  <% for (const quote of quotes) { %>
-    <h3>Author: <%= quote.name %></h3>
-    <p>Quote: <%= quote.quote %></p>
-  <% } %>
-  </div>
+    <div class="container">
+        <h1>Here are the quotes!</h1>
+        <% for (const user of users) { %>
+            <p>Author: <%= user.name %></p>
+            <p>Quote: <%= user.quote %></p>
+            <p> <%= user.date %> </p>
+            <hr>
+        <% } %>
+        <form>
+            <button formaction="/">Submit another quote!</button>
+        </form>
+    </div>
 </body>
 </html>
