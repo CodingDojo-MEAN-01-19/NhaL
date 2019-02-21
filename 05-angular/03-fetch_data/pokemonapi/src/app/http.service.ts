@@ -9,19 +9,56 @@ export class HttpService {
     this.pokemon();
   }
 
+
   pokemon() {
-    const tempObservable = this._http.get(
+    const tempObservable = this._http.get<PokeData>(
       'https://pokeapi.co/api/v2/pokemon/1/'
     );
     tempObservable.subscribe(data => {
-      console.log(data);
+      const pokemonName = data.name;
+      console.log('data: ', data);
       console.log(
-        data.name +
+          data.name +
           ' abilities are ' +
           data.abilities[0].ability.name +
           ' and ' +
           data.abilities[1].ability.name
       );
+
+      this.sharedAbilities(data.abilities[0].ability.url, pokemonName);
     });
   }
+
+  sharedAbilities(url, pokemonName) {
+    const chlorophyll = this._http.get<PokeData>(url);
+    chlorophyll.subscribe(data => {
+      console.log(
+        data.name +
+          ' pokemon with the same ability: ' +
+          data.name +
+          ' as ' +
+          pokemonName
+      );
+      // console.log(data);
+    });
+  }
+
+
 }
+
+interface PokeData {
+  abilities: Array<Ability>,
+  name: string,
+  height: number,
+  pokemon: {}
+}
+
+interface Ability {
+  ability: {
+    name: string,
+    url: string
+  }
+
+}
+
+
