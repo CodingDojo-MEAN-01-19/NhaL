@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Index</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <h1 class='jumbotron'>Index Page!</h1>
+  <a href="/new">Create new bird</a>
+<!--   <p><%= birds[0].name %></p> -->
+  <!-- loop through birds and display -->
+  <% for (let i = 0; i<birds.length; i++) { %>
+    <p>Name: <a href="/<%= birds[i]._id %>"><%= birds[i].name %></a>
+      <a href="/<%= birds[i]._id %>/edit/"><button>Edit bird</button></a>
+      <form action="/<%= birds[i]._id %>/delete/" method='post'>
+        <input type="submit" value="Delete">
+      </form>
+    </p> 
+  <% } %>
+</body>
+</html>

@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/basic_mongoose');
+mongoose.connect('mongodb://localhost/basic_mongoose',{ useNewUrlParser: true });
 
 // Require body-parser (to receive post data from clients)
 var bodyParser = require('body-parser');

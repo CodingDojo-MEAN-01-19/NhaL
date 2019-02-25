@@ -1,0 +1,24 @@
+{
+    "name": "task-api",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "dojo-json",
+    "license": "MIT",
+    "dependencies": {
+        "body-parser": "^1.17.2",
+        "compression": "^1.7.0",
+        "cors": "^2.8.4",
+        "express": "^4.15.4",
+        "helmet": "^3.8.1",
+        "mongoose": "^4.11.6",
+        "mongoose-unique-validator": "^1.0.5",
+        "morgan": "^1.8.2"
+    }
+}
